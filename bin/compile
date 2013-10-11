@@ -32,13 +32,14 @@ function vendor() {
   fi
 
   if [ -d "$path/lib/pkgconfig" ]; then
-    # pkg-config will handle compiler options
+    # pkg-config should handle compiler options (if used)
     export PKG_CONFIG_PATH="$path/lib/pkgconfig:$PKG_CONFIG_PATH"
-  else
-    export CPPPATH="$path/include:$CPPPATH"
-    export CPATH="$path/include:$CPATH"
-    export LIBRARY_PATH="$path/lib:$LIBRARY_PATH"
   fi
+
+  # standard paths
+  export CPPPATH="$path/include:$CPPPATH"
+  export CPATH="$path/include:$CPATH"
+  export LIBRARY_PATH="$path/lib:$LIBRARY_PATH"
 
   export LD_LIBRARY_PATH="$path/lib:$LD_LIBRARY_PATH"
 }
@@ -48,6 +49,11 @@ vendor "https://s3.amazonaws.com/mojodna-heroku/cairo-1.12.16-1.tar.gz"  "$BUILD
 vendor "https://s3.amazonaws.com/mojodna-heroku/freetype-2.5.0-1.tar.gz" "$BUILD_DIR/vendor/freetype"
 vendor "https://s3.amazonaws.com/mojodna-heroku/pixman-0.30.2-1.tar.gz"  "$BUILD_DIR/vendor/pixman"
 
+echo "-----> Tweaking Cairo, FreeType, and Pixman include paths"
+
+# node-canvas isn't using pkg-config, so we need to set non-standard paths
+export CPPPATH="$BUILD_DIR/vendor/cairo/include/cairo:$BUILD_DIR/vendor/pixman/include/pixman-1:$BUILD_DIR/vendor/freetype/include/freetype2:$CPPPATH"
+export CPATH="$BUILD_DIR/vendor/cairo/include/cairo:$BUILD_DIR/vendor/pixman/include/pixman-1:$BUILD_DIR/vendor/freetype/include/freetype2:$CPATH"
 
 echo "-----> Configuring build environment"
 
