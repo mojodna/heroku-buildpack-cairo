@@ -65,7 +65,8 @@ Preparation:
 cd tmp/
 curl -LO http://cairographics.org/releases/pixman-0.30.2.tar.gz \
      -LO http://cairographics.org/releases/cairo-1.12.16.tar.xz \
-     -LO http://download.savannah.gnu.org/releases/freetype/freetype-2.5.0.tar.bz2
+     -LO http://download.savannah.gnu.org/releases/freetype/freetype-2.5.0.tar.bz2 \
+     -L "http://downloads.sourceforge.net/project/giflib/giflib-4.x/giflib-4.2.3.tar.bz2?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fgiflib%2F&ts=1384049147&use_mirror=softlayer-dal" -o giflib-4.2.3.tar.bz2
 sudo chroot /mnt/stacks/cedar64-2.0.0
 ```
 
@@ -107,4 +108,17 @@ make -j4
 make install
 cd /app/vendor/cairo
 tar zcf /tmp/cairo-1.12.16-1.tar.gz .
+```
+
+giflib build/package:
+
+```bash
+cd /tmp
+tar jxf giflib-4.2.3.tar.bz2
+cd giflib-4.2.3/
+./configure --prefix=/app/vendor/giflib
+make -j4
+make -j4 install-exec
+cd /app/vendor/giflib
+tar zcf /tmp/giflib-4.2.3-1.tar.gz .
 ```
