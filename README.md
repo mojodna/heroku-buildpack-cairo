@@ -118,7 +118,7 @@ tar jxf giflib-4.2.3.tar.bz2
 cd giflib-4.2.3/
 ./configure --prefix=/app/vendor/giflib
 make -j4
-make -j4 install-exec
+make -j4 install-exec install-data
 cd /app/vendor/giflib
 tar zcf /tmp/giflib-4.2.3-1.tar.gz .
 ```
