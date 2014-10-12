@@ -42,10 +42,10 @@ function vendor() {
 }
 
 echo "-----> Vendoring binaries"
-vendor "https://s3.amazonaws.com/mojodna-heroku/cairo-1.12.16-1.tar.gz"  "$BUILD_DIR/vendor/cairo"
-vendor "https://s3.amazonaws.com/mojodna-heroku/freetype-2.5.0-1.tar.gz" "$BUILD_DIR/vendor/freetype"
-vendor "https://s3.amazonaws.com/mojodna-heroku/giflib-4.2.3-1.tar.gz" "$BUILD_DIR/vendor/giflib"
-vendor "https://s3.amazonaws.com/mojodna-heroku/pixman-0.30.2-1.tar.gz"  "$BUILD_DIR/vendor/pixman"
+vendor "https://s3.amazonaws.com/mojodna-heroku/$STACK/cairo-1.12.16-1.tar.gz"  "$BUILD_DIR/vendor/cairo"
+vendor "https://s3.amazonaws.com/mojodna-heroku/$STACK/freetype-2.5.3-1.tar.gz" "$BUILD_DIR/vendor/freetype"
+vendor "https://s3.amazonaws.com/mojodna-heroku/$STACK/giflib-4.2.3-1.tar.gz"   "$BUILD_DIR/vendor/giflib"
+vendor "https://s3.amazonaws.com/mojodna-heroku/$STACK/pixman-0.32.6-1.tar.gz"  "$BUILD_DIR/vendor/pixman"
 
 echo "-----> Tweaking Cairo, FreeType, and Pixman include paths"
 
