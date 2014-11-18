@@ -1,8 +1,8 @@
 # heroku-buildpack-cairo
 
 I am a Heroku buildpack that installs [Cairo](http://cairographics.org/) and
-its dependencies ([Pixman](http://pixman.org/) and
-[FreeType](http://www.freetype.org/)) into a dyno slug.
+its dependencies ([Pixman](http://pixman.org/), [FreeType](http://www.freetype.org/),
+and [giflib](http://giflib.sourceforge.net/)) into a dyno slug.
 
 When used with
 [heroku-buildpack-multi](https://github.com/ddollar/heroku-buildpack-multi),
@@ -13,7 +13,7 @@ I enable subsequent buildpacks / steps to link to this library.
 ### Composed
 
 You'll almost certainly want to use this in conjunction with one or more
-additional buildpack.
+additional buildpacks.
 
 When creating a new Heroku app:
 
