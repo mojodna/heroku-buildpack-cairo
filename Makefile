@@ -95,7 +95,8 @@ src/pixman.tar.gz:
 .PHONY: cedar-stack
 
 cedar-stack: cedar-stack/cedar.sh
-	@(docker images -q mojodna/$@ | wc -l | grep 1 > /dev/null) || \
+	@docker pull mojodna/$@ && \
+		(docker images -q mojodna/$@ | wc -l | grep 1 > /dev/null) || \
 		docker build --rm -t mojodna/$@ $@
 
 cedar-stack/cedar.sh:
@@ -104,7 +105,8 @@ cedar-stack/cedar.sh:
 .PHONY: cedar-14-stack
 
 cedar-14-stack: cedar-14-stack/cedar-14.sh
-	@(docker images -q mojodna/$@ | wc -l | grep 1 > /dev/null) || \
+	@docker pull mojodna/$@ && \
+		(docker images -q mojodna/$@ | wc -l | grep 1 > /dev/null) || \
 		docker build --rm -t mojodna/$@ $@
 
 cedar-14-stack/cedar-14.sh:
