@@ -1,15 +1,15 @@
 default: cedar cedar-14
 
-cedar: dist/cedar/pixman-0.32.6-1.tar.gz dist/cedar/freetype-2.5.3-1.tar.gz dist/cedar/giflib-4.2.3-1.tar.gz dist/cedar/cairo-1.12.16-1.tar.gz
+cedar: dist/cedar/pixman-0.32.6-1.tar.gz dist/cedar/freetype-2.5.5-1.tar.gz dist/cedar/giflib-4.2.3-1.tar.gz dist/cedar/cairo-1.14.2-1.tar.gz
 
-cedar-14: dist/cedar-14/pixman-0.32.6-1.tar.gz dist/cedar-14/freetype-2.5.3-1.tar.gz dist/cedar-14/giflib-4.2.3-1.tar.gz dist/cedar-14/cairo-1.12.16-1.tar.gz
+cedar-14: dist/cedar-14/pixman-0.32.6-1.tar.gz dist/cedar-14/freetype-2.5.5-1.tar.gz dist/cedar-14/giflib-4.2.3-1.tar.gz dist/cedar-14/pango-1.36.8-1.tar.gz dist/cedar-14/cairo-1.14.2-1.tar.gz dist/cedar-14/fontconfig-2.11.93-1.tar.gz dist/cedar-14/harfbuzz-0.9.39-1.tar.gz
 
-dist/cedar/cairo-1.12.16-1.tar.gz: cairo-cedar
+dist/cedar/cairo-1.14.2-1.tar.gz: cairo-cedar
 	docker cp $<:/tmp/cairo-cedar.tar.gz .
 	mkdir -p $$(dirname $@)
 	mv cairo-cedar.tar.gz $@
 
-dist/cedar/freetype-2.5.3-1.tar.gz: cairo-cedar
+dist/cedar/freetype-2.5.5-1.tar.gz: cairo-cedar
 	docker cp $<:/tmp/freetype-cedar.tar.gz .
 	mkdir -p $$(dirname $@)
 	mv freetype-cedar.tar.gz $@
@@ -24,12 +24,17 @@ dist/cedar/pixman-0.32.6-1.tar.gz: cairo-cedar
 	mkdir -p $$(dirname $@)
 	mv pixman-cedar.tar.gz $@
 
-dist/cedar-14/cairo-1.12.16-1.tar.gz: cairo-cedar-14
+dist/cedar-14/cairo-1.14.2-1.tar.gz: cairo-cedar-14
 	docker cp $<:/tmp/cairo-cedar-14.tar.gz .
 	mkdir -p $$(dirname $@)
 	mv cairo-cedar-14.tar.gz $@
 
-dist/cedar-14/freetype-2.5.3-1.tar.gz: cairo-cedar-14
+dist/cedar-14/fontconfig-2.11.93-1.tar.gz: cairo-cedar-14
+	docker cp $<:/tmp/fontconfig-cedar-14.tar.gz .
+	mkdir -p $$(dirname $@)
+	mv fontconfig-cedar-14.tar.gz $@
+
+dist/cedar-14/freetype-2.5.5-1.tar.gz: cairo-cedar-14
 	docker cp $<:/tmp/freetype-cedar-14.tar.gz .
 	mkdir -p $$(dirname $@)
 	mv freetype-cedar-14.tar.gz $@
@@ -38,6 +43,16 @@ dist/cedar-14/giflib-4.2.3-1.tar.gz: cairo-cedar-14
 	docker cp $<:/tmp/giflib-cedar-14.tar.gz .
 	mkdir -p $$(dirname $@)
 	mv giflib-cedar-14.tar.gz $@
+
+dist/cedar-14/harfbuzz-0.9.39-1.tar.gz: cairo-cedar-14
+	docker cp $<:/tmp/harfbuzz-cedar-14.tar.gz .
+	mkdir -p $$(dirname $@)
+	mv harfbuzz-cedar-14.tar.gz $@
+
+dist/cedar-14/pango-1.36.8-1.tar.gz: cairo-cedar-14
+	docker cp $<:/tmp/pango-cedar-14.tar.gz .
+	mkdir -p $$(dirname $@)
+	mv pango-cedar-14.tar.gz $@
 
 dist/cedar-14/pixman-0.32.6-1.tar.gz: cairo-cedar-14
 	docker cp $<:/tmp/pixman-cedar-14.tar.gz .
@@ -51,15 +66,27 @@ clean:
 
 src/cairo.tar.xz:
 	mkdir -p $$(dirname $@)
-	curl -sL http://cairographics.org/releases/cairo-1.12.16.tar.xz -o $@
+	curl -sL http://cairographics.org/releases/cairo-1.14.2.tar.xz -o $@
+
+src/fontconfig.tar.bz2:
+	mkdir -p $$(dirname $@)
+	curl -sL http://www.freedesktop.org/software/fontconfig/release/fontconfig-2.11.93.tar.bz2 -o $@
 
 src/freetype.tar.bz2:
 	mkdir -p $$(dirname $@)
-	curl -sL http://download.savannah.gnu.org/releases/freetype/freetype-2.5.3.tar.bz2 -o $@
+	curl -sL http://download.savannah.gnu.org/releases/freetype/freetype-2.5.5.tar.bz2 -o $@
 
 src/giflib.tar.bz2:
 	mkdir -p $$(dirname $@)
 	curl -sL "http://downloads.sourceforge.net/project/giflib/giflib-4.x/giflib-4.2.3.tar.bz2?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fgiflib%2F&ts=1384049147&use_mirror=softlayer-dal2" -o $@
+
+src/harfbuzz.tar.bz2:
+	mkdir -p $$(dirname $@)
+	curl -sL http://www.freedesktop.org/software/harfbuzz/release/harfbuzz-0.9.39.tar.bz2 -o $@
+
+src/pango.tar.xz:
+	mkdir -p $$(dirname $@)
+	curl -sL http://ftp.gnome.org/pub/GNOME/sources/pango/1.36/pango-1.36.8.tar.xz -o $@
 
 src/pixman.tar.gz:
 	mkdir -p $$(dirname $@)
@@ -104,7 +131,7 @@ cairo-cedar/pixman.tar.gz: src/pixman.tar.gz
 
 .PHONY: cairo-cedar-14
 
-cairo-cedar-14: cedar-14-stack cairo-cedar-14/pixman.tar.gz cairo-cedar-14/freetype.tar.bz2 cairo-cedar-14/giflib.tar.bz2 cairo-cedar-14/cairo.tar.xz
+cairo-cedar-14: cedar-14-stack cairo-cedar-14/pixman.tar.gz cairo-cedar-14/freetype.tar.bz2 cairo-cedar-14/giflib.tar.bz2 cairo-cedar-14/cairo.tar.xz cairo-cedar-14/pango.tar.xz cairo-cedar-14/fontconfig.tar.bz2 cairo-cedar-14/harfbuzz.tar.bz2
 	docker build --rm -t mojodna/$@ $@
 	-docker rm $@
 	docker run --name $@ mojodna/$@ /bin/echo $@
@@ -112,10 +139,19 @@ cairo-cedar-14: cedar-14-stack cairo-cedar-14/pixman.tar.gz cairo-cedar-14/freet
 cairo-cedar-14/cairo.tar.xz: src/cairo.tar.xz
 	ln -f $< $@
 
+cairo-cedar-14/fontconfig.tar.bz2: src/fontconfig.tar.bz2
+	ln -f $< $@
+
 cairo-cedar-14/freetype.tar.bz2: src/freetype.tar.bz2
 	ln -f $< $@
 
 cairo-cedar-14/giflib.tar.bz2: src/giflib.tar.bz2
+	ln -f $< $@
+
+cairo-cedar-14/harfbuzz.tar.bz2: src/harfbuzz.tar.bz2
+	ln -f $< $@
+
+cairo-cedar-14/pango.tar.xz: src/pango.tar.xz
 	ln -f $< $@
 
 cairo-cedar-14/pixman.tar.gz: src/pixman.tar.gz
