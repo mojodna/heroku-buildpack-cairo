@@ -43,6 +43,11 @@ EOF
 git push heroku master
 ```
 
+## Caveats
+
+Pango, HarfBuzz, and fontconfig are only available for the `cedar-14` runtime.
+(Pango is required for current versions of node-canvas.)
+
 ## Building
 
 This uses Docker to build against Heroku
