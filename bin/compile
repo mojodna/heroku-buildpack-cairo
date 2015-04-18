@@ -50,7 +50,7 @@ vendor "https://s3.amazonaws.com/mojodna-heroku/$STACK/pixman-0.32.6-2.tar.gz"  
 if [ $STACK == "cedar-14" ]; then
   vendor "https://s3.amazonaws.com/mojodna-heroku/$STACK/pango-1.36.8-1.tar.gz"  "$BUILD_DIR/vendor/pango"
   vendor "https://s3.amazonaws.com/mojodna-heroku/$STACK/harfbuzz-0.9.39-1.tar.gz"  "$BUILD_DIR/vendor/harfbuzz"
-  vendor "https://s3.amazonaws.com/mojodna-heroku/$STACK/fontconfig-2.11.93-1.tar.gz"  "$BUILD_DIR/vendor/harfbuzz"
+  vendor "https://s3.amazonaws.com/mojodna-heroku/$STACK/fontconfig-2.11.93-1.tar.gz"  "$BUILD_DIR/vendor/fontconfig"
 fi
 
 echo "-----> Tweaking Cairo, FreeType, and Pixman include paths"
