@@ -53,6 +53,8 @@ if [ $STACK == "cedar-14" ]; then
   vendor "https://s3.amazonaws.com/mojodna-heroku/$STACK/fontconfig-2.11.93-1.tar.gz"  "$BUILD_DIR/vendor/fontconfig"
 else
   echo
+  echo "-----> WARNING <-----"
+  echo
   echo "You are using the cedar-10 stack--node-canvas 1.2.1 cannot build due to" | indent
   echo "missing dependencies. Please consider updating to the cedar-14 stack:" | indent
   echo "heroku stack:set cedar-14" | indent
