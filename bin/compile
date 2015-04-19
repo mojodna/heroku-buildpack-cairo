@@ -89,3 +89,8 @@ export PKG_CONFIG_PATH="\$PKG_CONFIG_PATH:${PKG_CONFIG_PATH//$BUILD_DIR//app}"
 export CPPPATH="\$CPPPATH:${CPPPATH//$BUILD_DIR//app}"
 export CPATH="\$CPATH:${CPATH//$BUILD_DIR//app}"
 EOF
+
+echo "NOTE: if you are experiencing problems, they may be resulting from a cached"
+echo "library referencing and older version of Cairo. To bypass this with the nodejs"
+echo "buildpack, set NODE_MODULES_CACHE=false to force node-canvas to be rebuilt"
+echo "against newer versions of the libraries."
