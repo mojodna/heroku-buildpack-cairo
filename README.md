@@ -33,7 +33,7 @@ git push heroku master
 When modifying an existing Heroku app:
 
 ```bash
-heroku buildpack:set https://github.com/ddollar/heroku-buildpack-multi.git
+heroku buildpacks:set https://github.com/ddollar/heroku-buildpack-multi.git
 
 cat << EOF > .buildpacks
 https://github.com/mojodna/heroku-buildpack-cairo.git
