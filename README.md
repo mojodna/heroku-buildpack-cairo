@@ -15,32 +15,11 @@ I enable subsequent buildpacks / steps to link to this library.
 ### Composed
 
 You'll almost certainly want to use this in conjunction with one or more
-additional buildpacks.
-
-When creating a new Heroku app:
-
-```bash
-heroku apps:create -b https://github.com/ddollar/heroku-buildpack-multi.git
-
-cat << EOF > .buildpacks
-https://github.com/mojodna/heroku-buildpack-cairo.git
-https://github.com/heroku/heroku-buildpack-nodejs.git
-EOF
-
-git push heroku master
-```
-
-When modifying an existing Heroku app:
+additional buildpacks. [Heroku supports using multiple buildpacks for an
+app.](https://devcenter.heroku.com/articles/using-multiple-buildpacks-for-an-app)
 
 ```bash
-heroku buildpacks:set https://github.com/ddollar/heroku-buildpack-multi.git
-
-cat << EOF > .buildpacks
-https://github.com/mojodna/heroku-buildpack-cairo.git
-https://github.com/heroku/heroku-buildpack-nodejs.git
-EOF
-
-git push heroku master
+heroku buildpacks:add --index 1 https://github.com/mojodna/heroku-buildpack-cairo.git
 ```
 
 ## Building
@@ -57,7 +36,7 @@ Artifacts will be dropped in `dist/`.  See `Dockerfile`s for build options.
 ## Cairo Configuration
 
 ```
-cairo (version 1.14.2 [release]) will be compiled with:
+cairo (version 1.14.6 [release]) will be compiled with:
 
 The following surface backends:
   Image:         yes (always builtin)
@@ -68,11 +47,11 @@ The following surface backends:
   XML:           no (disabled, use --enable-xml to enable)
   Skia:          no (disabled, use --enable-skia to enable)
   Xlib:          yes
-  Xlib Xrender:  no (requires  http://freedesktop.org/Software/xlibs)
+  Xlib Xrender:  yes
   Qt:            no (disabled, use --enable-qt to enable)
   Quartz:        no (requires CoreGraphics framework)
   Quartz-image:  no (disabled, use --enable-quartz-image to enable)
-  XCB:           no (requires xcb >= 1.6 xcb-render >= 1.6 http://xcb.freedesktop.org)
+  XCB:           yes
   Win32:         no (requires a Win32 platform)
   OS2:           no (disabled, use --enable-os2 to enable)
   CairoScript:   yes
@@ -100,7 +79,7 @@ The following functions:
   WGL functions:   no (not required by any backend)
   EGL functions:   no (not required by any backend)
   X11-xcb functions: no (disabled, use --enable-xlib-xcb to enable)
-  XCB-shm functions: no (requires --enable-xcb)
+  XCB-shm functions: yes
 
 The following features and utilities:
   cairo-trace:                yes
@@ -125,13 +104,14 @@ Build configuration:
 Unicode callbacks (you want at least one):
 	Glib:			true
 	ICU:			false
-	UCDN:			false
+	UCDN:			true
 
 Font callbacks (the more the better):
 	FreeType:		true
 
 Tools used for command-line utilities:
 	Cairo:			true
+	Fontconfig:		true
 
 Additional shapers (the more the better):
 	Graphite2:		false
@@ -139,6 +119,7 @@ Additional shapers (the more the better):
 Platform shapers (not normally needed):
 	CoreText:		false
 	Uniscribe:		false
+	DirectWrite:		false
 
 Other features:
 	Documentation:		no

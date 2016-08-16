@@ -1,18 +1,18 @@
 default: cedar-14
 
-cedar-14: dist/cedar-14/pixman-0.32.6-1.tar.gz dist/cedar-14/freetype-2.5.5-1.tar.gz dist/cedar-14/giflib-4.2.3-1.tar.gz dist/cedar-14/pango-1.36.8-1.tar.gz dist/cedar-14/cairo-1.14.2-1.tar.gz dist/cedar-14/fontconfig-2.11.93-1.tar.gz dist/cedar-14/harfbuzz-0.9.39-1.tar.gz
+cedar-14: dist/cedar-14/pixman-0.34.0-1.tar.gz dist/cedar-14/freetype-2.6.5-1.tar.gz dist/cedar-14/giflib-4.2.3-1.tar.gz dist/cedar-14/pango-1.40.1-1.tar.gz dist/cedar-14/cairo-1.14.6-1.tar.gz dist/cedar-14/fontconfig-2.12.1-1.tar.gz dist/cedar-14/harfbuzz-1.3.0-1.tar.gz
 
-dist/cedar-14/cairo-1.14.2-1.tar.gz: cairo-cedar-14
+dist/cedar-14/cairo-1.14.6-1.tar.gz: cairo-cedar-14
 	docker cp $<:/tmp/cairo-cedar-14.tar.gz .
 	mkdir -p $$(dirname $@)
 	mv cairo-cedar-14.tar.gz $@
 
-dist/cedar-14/fontconfig-2.11.93-1.tar.gz: cairo-cedar-14
+dist/cedar-14/fontconfig-2.12.1-1.tar.gz: cairo-cedar-14
 	docker cp $<:/tmp/fontconfig-cedar-14.tar.gz .
 	mkdir -p $$(dirname $@)
 	mv fontconfig-cedar-14.tar.gz $@
 
-dist/cedar-14/freetype-2.5.5-1.tar.gz: cairo-cedar-14
+dist/cedar-14/freetype-2.6.5-1.tar.gz: cairo-cedar-14
 	docker cp $<:/tmp/freetype-cedar-14.tar.gz .
 	mkdir -p $$(dirname $@)
 	mv freetype-cedar-14.tar.gz $@
@@ -22,17 +22,17 @@ dist/cedar-14/giflib-4.2.3-1.tar.gz: cairo-cedar-14
 	mkdir -p $$(dirname $@)
 	mv giflib-cedar-14.tar.gz $@
 
-dist/cedar-14/harfbuzz-0.9.39-1.tar.gz: cairo-cedar-14
+dist/cedar-14/harfbuzz-1.3.0-1.tar.gz: cairo-cedar-14
 	docker cp $<:/tmp/harfbuzz-cedar-14.tar.gz .
 	mkdir -p $$(dirname $@)
 	mv harfbuzz-cedar-14.tar.gz $@
 
-dist/cedar-14/pango-1.36.8-1.tar.gz: cairo-cedar-14
+dist/cedar-14/pango-1.40.1-1.tar.gz: cairo-cedar-14
 	docker cp $<:/tmp/pango-cedar-14.tar.gz .
 	mkdir -p $$(dirname $@)
 	mv pango-cedar-14.tar.gz $@
 
-dist/cedar-14/pixman-0.32.6-1.tar.gz: cairo-cedar-14
+dist/cedar-14/pixman-0.34.0-1.tar.gz: cairo-cedar-14
 	docker cp $<:/tmp/pixman-cedar-14.tar.gz .
 	mkdir -p $$(dirname $@)
 	mv pixman-cedar-14.tar.gz $@
@@ -43,15 +43,15 @@ clean:
 
 src/cairo.tar.xz:
 	mkdir -p $$(dirname $@)
-	curl -sL http://cairographics.org/releases/cairo-1.14.2.tar.xz -o $@
+	curl -sL http://cairographics.org/releases/cairo-1.14.6.tar.xz -o $@
 
 src/fontconfig.tar.bz2:
 	mkdir -p $$(dirname $@)
-	curl -sL http://www.freedesktop.org/software/fontconfig/release/fontconfig-2.11.93.tar.bz2 -o $@
+	curl -sL http://www.freedesktop.org/software/fontconfig/release/fontconfig-2.12.1.tar.bz2 -o $@
 
 src/freetype.tar.bz2:
 	mkdir -p $$(dirname $@)
-	curl -sL http://download.savannah.gnu.org/releases/freetype/freetype-2.5.5.tar.bz2 -o $@
+	curl -sL http://download.savannah.gnu.org/releases/freetype/freetype-2.6.5.tar.bz2 -o $@
 
 src/giflib.tar.bz2:
 	mkdir -p $$(dirname $@)
@@ -59,15 +59,15 @@ src/giflib.tar.bz2:
 
 src/harfbuzz.tar.bz2:
 	mkdir -p $$(dirname $@)
-	curl -sL http://www.freedesktop.org/software/harfbuzz/release/harfbuzz-0.9.39.tar.bz2 -o $@
+	curl -sL http://www.freedesktop.org/software/harfbuzz/release/harfbuzz-1.3.0.tar.bz2 -o $@
 
 src/pango.tar.xz:
 	mkdir -p $$(dirname $@)
-	curl -sL http://ftp.gnome.org/pub/GNOME/sources/pango/1.36/pango-1.36.8.tar.xz -o $@
+	curl -sL http://ftp.gnome.org/pub/GNOME/sources/pango/1.40/pango-1.40.1.tar.xz -o $@
 
 src/pixman.tar.gz:
 	mkdir -p $$(dirname $@)
-	curl -sL http://cairographics.org/releases/pixman-0.32.6.tar.gz -o $@
+	curl -sL http://cairographics.org/releases/pixman-0.34.0.tar.gz -o $@
 
 .PHONY: cedar-14-stack
 
