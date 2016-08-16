@@ -1,28 +1,6 @@
-default: cedar cedar-14
-
-cedar: dist/cedar/pixman-0.32.6-1.tar.gz dist/cedar/freetype-2.5.5-1.tar.gz dist/cedar/giflib-4.2.3-1.tar.gz dist/cedar/cairo-1.14.2-1.tar.gz
+default: cedar-14
 
 cedar-14: dist/cedar-14/pixman-0.32.6-1.tar.gz dist/cedar-14/freetype-2.5.5-1.tar.gz dist/cedar-14/giflib-4.2.3-1.tar.gz dist/cedar-14/pango-1.36.8-1.tar.gz dist/cedar-14/cairo-1.14.2-1.tar.gz dist/cedar-14/fontconfig-2.11.93-1.tar.gz dist/cedar-14/harfbuzz-0.9.39-1.tar.gz
-
-dist/cedar/cairo-1.14.2-1.tar.gz: cairo-cedar
-	docker cp $<:/tmp/cairo-cedar.tar.gz .
-	mkdir -p $$(dirname $@)
-	mv cairo-cedar.tar.gz $@
-
-dist/cedar/freetype-2.5.5-1.tar.gz: cairo-cedar
-	docker cp $<:/tmp/freetype-cedar.tar.gz .
-	mkdir -p $$(dirname $@)
-	mv freetype-cedar.tar.gz $@
-
-dist/cedar/giflib-4.2.3-1.tar.gz: cairo-cedar
-	docker cp $<:/tmp/giflib-cedar.tar.gz .
-	mkdir -p $$(dirname $@)
-	mv giflib-cedar.tar.gz $@
-
-dist/cedar/pixman-0.32.6-1.tar.gz: cairo-cedar
-	docker cp $<:/tmp/pixman-cedar.tar.gz .
-	mkdir -p $$(dirname $@)
-	mv pixman-cedar.tar.gz $@
 
 dist/cedar-14/cairo-1.14.2-1.tar.gz: cairo-cedar-14
 	docker cp $<:/tmp/cairo-cedar-14.tar.gz .
@@ -61,7 +39,6 @@ dist/cedar-14/pixman-0.32.6-1.tar.gz: cairo-cedar-14
 
 clean:
 	rm -rf src/ cedar*/*.sh dist/ cairo-cedar*/*.tar.*
-	-docker rm cairo-cedar
 	-docker rm cairo-cedar-14
 
 src/cairo.tar.xz:
@@ -92,16 +69,6 @@ src/pixman.tar.gz:
 	mkdir -p $$(dirname $@)
 	curl -sL http://cairographics.org/releases/pixman-0.32.6.tar.gz -o $@
 
-.PHONY: cedar-stack
-
-cedar-stack: cedar-stack/cedar.sh
-	@docker pull mojodna/$@ && \
-		(docker images -q mojodna/$@ | wc -l | grep 1 > /dev/null) || \
-		docker build --rm -t mojodna/$@ $@
-
-cedar-stack/cedar.sh:
-	curl -sLR https://raw.githubusercontent.com/heroku/stack-images/master/bin/cedar.sh -o $@
-
 .PHONY: cedar-14-stack
 
 cedar-14-stack: cedar-14-stack/cedar-14.sh
@@ -111,25 +78,6 @@ cedar-14-stack: cedar-14-stack/cedar-14.sh
 
 cedar-14-stack/cedar-14.sh:
 	curl -sLR https://raw.githubusercontent.com/heroku/stack-images/master/bin/cedar-14.sh -o $@
-
-.PHONY: cairo-cedar
-
-cairo-cedar: cedar-stack cairo-cedar/pixman.tar.gz cairo-cedar/freetype.tar.bz2 cairo-cedar/giflib.tar.bz2 cairo-cedar/cairo.tar.xz
-	docker build --rm -t mojodna/$@ $@
-	-docker rm $@
-	docker run --name $@ mojodna/$@ /bin/echo $@
-
-cairo-cedar/cairo.tar.xz: src/cairo.tar.xz
-	ln -f $< $@
-
-cairo-cedar/freetype.tar.bz2: src/freetype.tar.bz2
-	ln -f $< $@
-
-cairo-cedar/giflib.tar.bz2: src/giflib.tar.bz2
-	ln -f $< $@
-
-cairo-cedar/pixman.tar.gz: src/pixman.tar.gz
-	ln -f $< $@
 
 .PHONY: cairo-cedar-14
 
