@@ -1,4 +1,4 @@
-FROM mojodna/cedar-14-stack
+FROM daylon/cedar-14-stack
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -12,6 +12,7 @@ ADD ./giflib.tar.bz2 /tmp
 ADD ./fontconfig.tar.bz2 /tmp
 ADD ./cairo.tar.xz /tmp
 ADD ./pango.tar.xz /tmp
+ADD ./librsvg.tar.xz /tmp
 
 RUN \
   cd /tmp/harfbuzz-* && \
@@ -52,6 +53,11 @@ RUN \
   make install
 
 RUN \
+  cd /tmp/librsvg-* && \
+  ./configure --prefix=/app/vendor/librsvg && \
+  make install
+
+RUN \
   cd /app/vendor/pixman && \
   tar zcf /tmp/pixman-cedar-14.tar.gz . && \
   cd /app/vendor/freetype && \
@@ -66,3 +72,5 @@ RUN \
   tar zcf /tmp/harfbuzz-cedar-14.tar.gz . && \
   cd /app/vendor/pango && \
   tar zcf /tmp/pango-cedar-14.tar.gz .
+  cd /app/vendor/librsvg && \
+  tar zcf /tmp/librsvg-cedar-14.tar.gz .
