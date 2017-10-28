@@ -32,6 +32,11 @@ dist/cedar-14/pango-1.40.1-1.tar.gz: cairo-cedar-14
 	mkdir -p $$(dirname $@)
 	mv pango-cedar-14.tar.gz $@
 
+dist/cedar-14/librsvg-2.41.1.tar.xz: cairo-cedar-14
+	docker cp $<:/tmp/librsvg-cedar-14.tar.gz .
+	mkdir -p $$(dirname $@)
+	mv librsvg-cedar-14.tar.gz $@
+
 dist/cedar-14/pixman-0.34.0-1.tar.gz: cairo-cedar-14
 	docker cp $<:/tmp/pixman-cedar-14.tar.gz .
 	mkdir -p $$(dirname $@)
@@ -65,6 +70,10 @@ src/pango.tar.xz:
 	mkdir -p $$(dirname $@)
 	curl -sL http://ftp.gnome.org/pub/GNOME/sources/pango/1.40/pango-1.40.1.tar.xz -o $@
 
+src/librsvg.tar.xz:
+	mkdir -p $$(dirname $@)
+	curl -sL https://download.gnome.org/sources/librsvg/2.41/librsvg-2.41.1.tar.xz -o $@
+
 src/pixman.tar.gz:
 	mkdir -p $$(dirname $@)
 	curl -sL http://cairographics.org/releases/pixman-0.34.0.tar.gz -o $@
@@ -72,19 +81,19 @@ src/pixman.tar.gz:
 .PHONY: cedar-14-stack
 
 cedar-14-stack: cedar-14-stack/cedar-14.sh
-	@docker pull mojodna/$@ && \
-		(docker images -q mojodna/$@ | wc -l | grep 1 > /dev/null) || \
-		docker build --rm -t mojodna/$@ $@
+	@docker pull daylon/$@ && \
+		(docker images -q daylon/$@ | wc -l | grep 1 > /dev/null) || \
+		docker build --rm -t daylon/$@ $@
 
 cedar-14-stack/cedar-14.sh:
 	curl -sLR https://raw.githubusercontent.com/heroku/stack-images/master/bin/cedar-14.sh -o $@
 
 .PHONY: cairo-cedar-14
 
-cairo-cedar-14: cedar-14-stack cairo-cedar-14/pixman.tar.gz cairo-cedar-14/freetype.tar.bz2 cairo-cedar-14/giflib.tar.bz2 cairo-cedar-14/cairo.tar.xz cairo-cedar-14/pango.tar.xz cairo-cedar-14/fontconfig.tar.bz2 cairo-cedar-14/harfbuzz.tar.bz2
-	docker build --rm -t mojodna/$@ $@
+cairo-cedar-14: cedar-14-stack cairo-cedar-14/pixman.tar.gz cairo-cedar-14/freetype.tar.bz2 cairo-cedar-14/giflib.tar.bz2 cairo-cedar-14/cairo.tar.xz cairo-cedar-14/pango.tar.xz  cairo-cedar-14/librsvg.tar.xz cairo-cedar-14/fontconfig.tar.bz2 cairo-cedar-14/harfbuzz.tar.bz2
+	docker build --rm -t daylon/$@ $@
 	-docker rm $@
-	docker run --name $@ mojodna/$@ /bin/echo $@
+	docker run --name $@ daylon/$@ /bin/echo $@
 
 cairo-cedar-14/cairo.tar.xz: src/cairo.tar.xz
 	ln -f $< $@
@@ -102,6 +111,9 @@ cairo-cedar-14/harfbuzz.tar.bz2: src/harfbuzz.tar.bz2
 	ln -f $< $@
 
 cairo-cedar-14/pango.tar.xz: src/pango.tar.xz
+	ln -f $< $@
+
+cairo-cedar-14/librsvg.tar.xz: src/librsvg.tar.xz
 	ln -f $< $@
 
 cairo-cedar-14/pixman.tar.gz: src/pixman.tar.gz

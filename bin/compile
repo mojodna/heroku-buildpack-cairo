@@ -47,14 +47,15 @@ vendor "https://s3.amazonaws.com/mojodna-heroku/$STACK/freetype-2.6.5-1.tar.gz" 
 vendor "https://s3.amazonaws.com/mojodna-heroku/$STACK/giflib-4.2.3-3.tar.gz"   "$BUILD_DIR/vendor/giflib"
 vendor "https://s3.amazonaws.com/mojodna-heroku/$STACK/pixman-0.34.0-1.tar.gz"  "$BUILD_DIR/vendor/pixman"
 vendor "https://s3.amazonaws.com/mojodna-heroku/$STACK/pango-1.40.1-1.tar.gz"  "$BUILD_DIR/vendor/pango"
+vendor "https://download.gnome.org/sources/librsvg/2.41/librsvg-2.41.1.tar.xz"  "$BUILD_DIR/vendor/librsvg"
 vendor "https://s3.amazonaws.com/mojodna-heroku/$STACK/harfbuzz-1.3.0-1.tar.gz"  "$BUILD_DIR/vendor/harfbuzz"
 vendor "https://s3.amazonaws.com/mojodna-heroku/$STACK/fontconfig-2.12.1-1.tar.gz"  "$BUILD_DIR/vendor/fontconfig"
 
 echo "-----> Tweaking Cairo, FreeType, and Pixman include paths"
 
 # node-canvas isn't using pkg-config, so we need to set non-standard paths
-export CPPPATH="$BUILD_DIR/vendor/cairo/include/cairo:$BUILD_DIR/vendor/pixman/include/pixman-1:$BUILD_DIR/vendor/freetype/include/freetype2:$BUILD_DIR/vendor/pango/include/pango-1.0:$CPPPATH"
-export CPATH="$BUILD_DIR/vendor/cairo/include/cairo:$BUILD_DIR/vendor/pixman/include/pixman-1:$BUILD_DIR/vendor/freetype/include/freetype2:$BUILD_DIR/vendor/pango/include/pango-1.0:$CPATH"
+export CPPPATH="$BUILD_DIR/vendor/cairo/include/cairo:$BUILD_DIR/vendor/pixman/include/pixman-1:$BUILD_DIR/vendor/freetype/include/freetype2:$BUILD_DIR/vendor/pango/include/pango-1.0:$BUILD_DIR/vendor/pango/include/librsvg:$CPPPATH"
+export CPATH="$BUILD_DIR/vendor/cairo/include/cairo:$BUILD_DIR/vendor/pixman/include/pixman-1:$BUILD_DIR/vendor/freetype/include/freetype2:$BUILD_DIR/vendor/pango/include/pango-1.0:$BUILD_DIR/vendor/pango/include/librsvg:$CPATH"
 
 echo "-----> Configuring build environment"
 
